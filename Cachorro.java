@@ -107,6 +107,7 @@ public class Cachorro{
      lset.add(new Cachorro("Thor",5.63d));
      lset.add(new Cachorro("Spyke",10d));
      lset.add(new Cachorro("Brax",22.57d));
+	 lset.add(new Cachorro("Chuck",50.88d));
      java.util.Iterator<Cachorro> iterator = lset.iterator();
      while (iterator.hasNext()) {
      	System.out.print(iterator.next() + " ");

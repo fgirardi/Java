@@ -1,0 +1,53 @@
+#java.lang é o unico pacote que é automaticamente importado. Classes: String e System (posssui varios atributos estaticos)
+ PrintStream saida = System.out; O atributo out é do tipo PrintStream
+ saida.println("ola mundo!");
+ 
+# System.exit(0); Desliga a maquina virtual retornando 0 para o SO.
+
+# JAVA.LANG.OBJECT Quando o Java não encontra a palavra chave extends, ele considera que você está herdando da classe Object
+
+# Conta contaResgatada = object; Essa linha não compila, pois nem todo Object é uma Conta. Usar: Conta contaResgatada = (Conta) object;
+  Exceção de tratamento: ClassCastException.
+ 
+# MÉTODOS DO JAVA.LANG.OBJECT: EQUALS E TOSTRING 
+  public String toString() {
+	return "Uma conta com valor: " + this.saldo;
+  }
+  
+  Conta c = new Conta(100);	System.out.println(c.toString()); OU Conta c = new Conta(100); System.out.println(c);
+
+# Sobre carga com tipos ambiguos
+  Em algumas situacoes, sao passados parametros que sao compativeis com a assinatura de varios metodos. Neste caso é chamado o metodo 
+  que possua a lista mais especifica possivel em relação aos tipos dos parametros. Ex:
+  
+  ublic class SobreCarga {
+
+	public int soma(byte b1, byte b2){
+		System.out.println("Soma de Byte: " + b1 +" "+b2 );
+		return b1 + b2;
+	}
+	
+	public long soma(long b1, long b2){
+		System.out.println("Soma de Long: "+ b1 +" "+b2 );
+		return b1 + b2;
+	}
+	
+	public double soma(double b1, double b2){
+		System.out.println("Soma de Double: "+ b1 +" "+b2 );
+		return b1 + b2;
+	}
+	
+	public static void main(String[] args){
+		SobreCarga calc = new SobreCarga();
+		calc.soma(127, 1);
+		byte a = 127;
+		byte b = 25;
+		calc.soma(a, b);
+		calc.soma((byte) 24, (byte) 25); 
+	}
+}
+//////////////Resultado do console
+Soma de Long: 127 1
+Soma de Byte: 127 25
+Soma de Byte: 24 25
+

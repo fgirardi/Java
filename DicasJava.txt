@@ -1,26 +1,134 @@
+#Variaveis Tipos Primitivos
+boolean 1 bit  default false.
+byte    6 bits default 0
+short  16 bits default 0
+char   16 bits default \u0000
+int    32 bits default 0
+float  32 bits default 0
+long   64 bits default 0
+Double 64 bits default 0
+
 #java.lang é o unico pacote que é automaticamente importado. Classes: String e System (posssui varios atributos estaticos)
- PrintStream saida = System.out; O atributo out é do tipo PrintStream
- saida.println("ola mundo!");
- 
-# System.exit(0); Desliga a maquina virtual retornando 0 para o SO.
+
+	 PrintStream saida = System.out; O atributo out é do tipo PrintStream
+	 saida.println("ola mundo!");
+	 System.exit(0); Desliga a maquina virtual retornando 0 para o SO.
 
 # JAVA.LANG.OBJECT Quando o Java não encontra a palavra chave extends, ele considera que você está herdando da classe Object
 
-# Conta contaResgatada = object; Essa linha não compila, pois nem todo Object é uma Conta. Usar: Conta contaResgatada = (Conta) object;
-  Exceção de tratamento: ClassCastException.
+	Conta contaResgatada = object; Essa linha não compila, pois nem todo Object é uma Conta. 
+	Usar: Conta contaResgatada = (Conta) object;
+	Exceção de tratamento: ClassCastException.
  
 # MÉTODOS DO JAVA.LANG.OBJECT: EQUALS E TOSTRING 
-  public String toString() {
-	return "Uma conta com valor: " + this.saldo;
-  }
+	  
+	  public String toString() {
+		return "Uma conta com valor: " + this.saldo;
+	  }
+	  
+	  Conta c = new Conta(100);	System.out.println(c.toString()); OU Conta c = new Conta(100); System.out.println(c);
+	  
+	  O equals recebe um Object como argumento e deve verificar se ele mesmo é
+	  igual ao Object recebido para retornar um boolean. Se você não reescrever esse
+	  método, o comportamento herdado é fazer um == com o objeto recebido como
+	  argumento.
+	  
+	  public boolean equals(Object object) {
+		if (!(object instanceof Conta))
+			return false;
+		Conta outraConta = (Conta) object;
+		return this.saldo == outraConta.saldo;
+	  }
   
-  Conta c = new Conta(100);	System.out.println(c.toString()); OU Conta c = new Conta(100); System.out.println(c);
+# Identificadores 
+   Todo as palavras reservadas no Java é escrita em minusculo.
+   
+#Enumeradores
+    enum StatusPedido (CANCELADO, ENVIADO, RECEBIDO)
+	
+	=> (CANCELADO, ENVIADO, RECEBIDO) Sao instancias (Objetos) do StatusPedido
+	
+	*Pode conter atributos, metodos e construtores. O construtor de um Enum pode ser acessado dentro do proprio enum.
+	*values() Retorna um array de enum.
+	
+#Uma String é imutável
+	Repare no código abaixo:
+	
+	String palavra = "fj11";
+	palavra.toUpperCase();
+	System.out.println(palavra);
+	
+	Pode parecer estranho, mas ele imprime "fj11" em minúsculo. Todo método que parece alterar o valor de uma String, na verdade, 
+	cria uma nova String com as mudanças solicitadas e a retorna! Tanto que esse método não é void. O código realmente útil ficaria assim:
+	
+	String palavra = "fj11";
+	String outra = palavra.toUpperCase();
+	System.out.println(outra);
+
+	A partir do Java 6, temos ainda o método isEmpty, que devolve true se a String for vazia ou false caso contrário.
+
+#	Variaveis Estaticas (class variables)
+
+
+
+# Classe Wrapper
+	public class Programa1 {
+		
+			public static void main(String[] args) {
+				int i = 10;
+				m1(i);
+			}
+			private static void m1(Integer j) {
+				System.out.println("go!");
+			}
+		
+	}
+	//R:Imprime go!
+ 
+	public class Programa2 {
+		
+		static int i;
+		public static void main(String[] args) {
+			i = Integer.parseInt("10");
+			m1(i + 1);
+		}
+		private static void m1(Integer j) {
+			System.out.println(i);
+		}
+
+	}
+	//R: Imprime 10. Tomar atenção pois esta questao induz ao erro. Pois imprime i, deveria imprimir j para dar 11.
+	
+	public class Programa3 {
+		static long i;
+		public static void main(String[] args) {
+		i = Integer.valueOf("10",8); // 8 eh a base do numero
+		System.out.println(i);
+		m1(i); // B
+		}
+		private static void m1(Integer j) { // C
+		System.out.println(j);
+		}
+	
+	}
+	//R: Erro na linha B. i foi declarado como long e a assinatura do metodo m1 espera um paramtro do tipo Integer	
+	
+	Difference between parseInt vs valueOf in Java
+	The main difference between Integer.parseInt() vs Integer.valueOf() would be
+	parseInt(): will be returning the primitive type int
+	valueOf() : will be returning the Integer wrapper Object
+	
+# java.lang StringBuffer e StringBuilder
+
+   Como a classe String é imutável, trabalhar com uma mesma String diversas vezes pode ter um efeito colateral: gerar inúmeras Strings
+   temporárias. Isto prejudica a performance da aplicação consideravelmente.
 
 # Sobre carga com tipos ambiguos
-  Em algumas situacoes, sao passados parametros que sao compativeis com a assinatura de varios metodos. Neste caso é chamado o metodo 
-  que possua a lista mais especifica possivel em relação aos tipos dos parametros. Ex:
+   
+   Em algumas situacoes, sao passados parametros que sao compativeis com a assinatura de varios metodos. Neste caso é chamado o metodo 
+   que possua a lista mais especifica possivel em relação aos tipos dos parametros. Ex:
   
-  ublic class SobreCarga {
+   public class SobreCarga {
 
 	public int soma(byte b1, byte b2){
 		System.out.println("Soma de Byte: " + b1 +" "+b2 );
@@ -45,9 +153,9 @@
 		calc.soma(a, b);
 		calc.soma((byte) 24, (byte) 25); 
 	}
-}
-//////////////Resultado do console
-Soma de Long: 127 1
-Soma de Byte: 127 25
-Soma de Byte: 24 25
+   }
+	//////////////Resultado do console
+	Soma de Long: 127 1
+	Soma de Byte: 127 25
+	Soma de Byte: 24 25
 
